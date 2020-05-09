@@ -31,17 +31,44 @@
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <TextView
+                                android:id="@+id/timeStamp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/titleTv"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp"
+                                android:layout_marginBottom="10dp"
+                                android:text="12:00"
+                                android:textColor="#000"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/titleTv" />
+
+                        <TextView
                             android:id="@+id/descTv"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_below="@+id/titleTv"
+                            android:layout_below="@+id/timeStamp"
                             android:layout_marginLeft="10dp"
                             android:layout_marginRight="10dp"
-                            android:layout_marginBottom="10dp"
+
                             android:text="Description"
                             android:textColor="#000"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/titleTv" />
+                            app:layout_constraintTop_toBottomOf="@+id/timeStamp" />
+
+                        <TextView
+                                android:id="@+id/addressTx"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/descTv"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp"
+                                android:layout_marginBottom="10dp"
+                                android:text="Address"
+                                android:textColor="#000"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/descTv" />
+
                   </RelativeLayout>
         </androidx.cardview.widget.CardView>
 </RelativeLayout>

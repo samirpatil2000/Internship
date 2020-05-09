@@ -83,7 +83,8 @@ public class ListActivity extends AppCompatActivity {
                             for (DocumentSnapshot doc : task.getResult()) {
                                 Model model = new Model(doc.getString("id")
                                         , doc.getString("title")
-                                        , doc.getString("desc"));
+                                        , doc.getString("desc")
+                                ,doc.getString("address"));
                                 modelList.add(model);
                             }
                         }

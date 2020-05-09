@@ -14,7 +14,8 @@
             android:ems="10"
             android:id="@+id/title_Et" android:hint="Title" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="13dp" app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="11dp" android:layout_marginTop="110dp" app:layout_constraintTop_toTopOf="parent"/>
+            android:layout_marginEnd="11dp" android:layout_marginTop="108dp" app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"/>
     <EditText
             android:layout_width="387dp"
             android:layout_height="wrap_content"
@@ -22,28 +23,37 @@
             android:ems="10"
             android:id="@+id/desc_Et"
             app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
-            android:hint="Description" android:layout_marginTop="27dp"
+            android:hint="Description" android:layout_marginTop="16dp"
             app:layout_constraintTop_toBottomOf="@+id/title_Et"/>
-
     <Button
-        android:id="@+id/save_btn"
-        android:layout_width="108dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="60dp"
-        android:text="Add Post"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/desc_Et" />
-
+            android:id="@+id/save_btn"
+            android:layout_width="108dp"
+            android:layout_height="48dp"
+            android:text="Add Post"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/addressTv" android:layout_marginTop="76dp"/>
     <Button
-        android:id="@+id/showList"
-        android:layout_width="108dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="7dp"
-        android:text="Show List"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/save_btn" />
+            android:id="@+id/showList"
+            android:layout_width="108dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
+            android:text="Show List"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/save_btn"/>
+    <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" app:srcCompat="@drawable/ic_location"
+            android:id="@+id/locationImgBtn"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="16dp"
+            android:layout_marginTop="12dp" app:layout_constraintTop_toBottomOf="@+id/desc_Et"/>
+    <TextView
+            android:text="TextView"
+            android:layout_width="319dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/addressTv" android:layout_marginEnd="16dp" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="12dp" app:layout_constraintTop_toBottomOf="@+id/desc_Et" android:textSize="18sp"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
