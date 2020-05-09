@@ -55,11 +55,13 @@ public class Adapter extends RecyclerView.Adapter<ViewHolder> {
                             String id = modelList.get(position).getId();
                             String title = modelList.get(position).getTitle();
                             String desc = modelList.get(position).getDesc();
+                            String address=modelList.get(position).getAddress();
 
                             Intent intent= new Intent(listActivity,MainActivity.class);
                             intent.putExtra("putId",id);
                             intent.putExtra("putTitle",title);
                             intent.putExtra("putDesc",desc);
+                            intent.putExtra("putAddress",address);
                             listActivity.startActivity(intent);
                         }
                         else if(which==1){
@@ -80,6 +82,7 @@ public class Adapter extends RecyclerView.Adapter<ViewHolder> {
 
         holder.title.setText(modelList.get(position).getTitle());
         holder.desc.setText(modelList.get(position).getDesc());
+        holder.address.setText(modelList.get(position).getAddress());
 
     }
 

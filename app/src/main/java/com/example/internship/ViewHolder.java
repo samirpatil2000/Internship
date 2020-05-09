@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class ViewHolder extends RecyclerView.ViewHolder {
 
-    TextView title,desc;
+    TextView title,desc,address;
     View view;
 
     public ViewHolder(@NonNull View itemView) {
@@ -32,6 +32,7 @@ public class ViewHolder extends RecyclerView.ViewHolder {
         // init view with
         title = itemView.findViewById(R.id.titleTv);
         desc=itemView.findViewById(R.id.descTv);
+        address = itemView.findViewById(R.id.addressTx);
     }
     private ViewHolder.ClickListener gClickListener;
 

@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
     FirebaseFirestore firestore;
 
-    String putId,putTitle,putDesc;
+    String putId,putTitle,putDesc,putAddress;
 
     // Address Though location
     String address;
@@ -75,9 +75,12 @@ public class MainActivity extends AppCompatActivity {
             putId = bundle.getString("putId");
             putTitle = bundle.getString("putTitle");
             putDesc = bundle.getString("putDesc");
+            putAddress=bundle.getString("putAddress");
+
 
             titleEt.setText(putTitle);
             descEt.setText(putDesc);
+            addressTv.setText(putAddress);
         }
         else{
 
@@ -97,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
                     String desc = descEt.getText().toString();
 
                     // function call to update data
-                    updateData(id,title,desc);
+                    updateData(id,title,desc,address);
 
                 }
                 else{
@@ -231,12 +234,12 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    private void updateData(String id, String title, String desc) {
+    private void updateData(String id, String title, String desc,String address) {
         pd.setTitle("Updating...");
         pd.show();
 
         firestore.collection("Data").document(id)
-                .update("title",title,"desc",desc)
+                .update("title",title,"desc",desc,"address",address)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
