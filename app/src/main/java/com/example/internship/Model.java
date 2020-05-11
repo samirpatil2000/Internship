@@ -2,9 +2,12 @@ package com.example.internship;
 
 import com.google.firestore.v1beta1.DocumentTransform;
 
+import static java.sql.Types.TIMESTAMP;
+
 public class Model {
     String id, title,desc,address;
     Object timeStamp;
+
     public Model() {
     }
 
@@ -13,7 +16,7 @@ public class Model {
         this.title = title;
         this.desc = desc;
         this.address=address;
-//        this.timeStamp = DocumentTransform.FieldTransform.ServerValue.TIMESTAMP;
+        this.timeStamp = TIMESTAMP;
     }
 
     public String getId() {

@@ -56,12 +56,15 @@ public class Adapter extends RecyclerView.Adapter<ViewHolder> {
                             String title = modelList.get(position).getTitle();
                             String desc = modelList.get(position).getDesc();
                             String address=modelList.get(position).getAddress();
+                            Integer timestamp = (Integer) modelList.get(position).getTimeStamp();
 
                             Intent intent= new Intent(listActivity,MainActivity.class);
                             intent.putExtra("putId",id);
                             intent.putExtra("putTitle",title);
                             intent.putExtra("putDesc",desc);
                             intent.putExtra("putAddress",address);
+                            intent.putExtra("putTimestamp",timestamp);
+
                             listActivity.startActivity(intent);
                         }
                         else if(which==1){

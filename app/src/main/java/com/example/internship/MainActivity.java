@@ -16,6 +16,7 @@ import android.view.View;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -41,6 +42,10 @@ public class MainActivity extends AppCompatActivity {
     // for location
     LocationManager locationManager;
     LocationListener locationListener;
+
+    static ArrayList<LatLng> locations= new ArrayList<LatLng>();
+
+
 
 
 
@@ -107,6 +112,7 @@ public class MainActivity extends AppCompatActivity {
                     String title = titleEt.getText().toString();
                     String desc = descEt.getText().toString();
 
+
                     uploadToFirestore(title,desc,address);
 
                 }
@@ -165,6 +171,8 @@ public class MainActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+
     }
 
 
@@ -187,9 +195,23 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    private void updateLocationInfo(Location location) {
+    private void updateLocationInfo(final Location location) {
         address=" Could not find address :( ";
         Geocoder geocoder=new Geocoder(this, Locale.getDefault());
+
+
+        locations.add(new LatLng(location.getLongitude(),location.getLatitude()));
+
+        // send location to google map
+        addressTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent mapActivity = new Intent(MainActivity.this,MapsActivity.class);
+                mapActivity.putExtra("location",location);
+                startActivity(mapActivity);
+                finish();
+            }
+        });
 
         try{
             List<Address> listAddress=geocoder.getFromLocation(location.getLatitude(),location.getLongitude(),1);
@@ -198,28 +220,28 @@ public class MainActivity extends AppCompatActivity {
                 address="Address:\n";
 
                 if(listAddress.get(0).getThoroughfare() !=null) {
-                    address += listAddress.get(0).getThoroughfare() +" Thoroughfare"+ "\n";
+                    address += listAddress.get(0).getThoroughfare() +","+ "\n";
                 }
 
                 if (listAddress.get(0).getSubLocality() !=null){
-                    address+= listAddress.get(0).getLocality()+" SubLocality"+"\n";
+                    address+= listAddress.get(0).getLocality()+" ,"+"\n";
                 }
 
                 if (listAddress.get(0).getLocality() !=null){
-                    address+= listAddress.get(0).getLocality()+" Locality"+"\n";
+                    address+= listAddress.get(0).getLocality()+" ,"+"\n";
                 }
 
 
                 if (listAddress.get(0).getSubAdminArea() !=null){
-                    address+= listAddress.get(0).getLocality()+" SubAdminArea"+"\n";
+                    address+= listAddress.get(0).getLocality()+" ,"+"\n";
                 }
 
                 if (listAddress.get(0).getPostalCode() !=null){
-                    address+= listAddress.get(0).getPostalCode()+" Postal Code"+"\n";
+                    address+= listAddress.get(0).getPostalCode()+" ,"+"\n";
                 }
 
                 if (listAddress.get(0).getAdminArea() !=null){
-                    address+= listAddress.get(0).getAdminArea()+" AdminArea"+"\n";
+                    address+= listAddress.get(0).getAdminArea()+" "+"\n";
                 }
 
 
@@ -267,8 +289,7 @@ public class MainActivity extends AppCompatActivity {
         doc.put("title",title);
         doc.put("desc",desc);
         doc.put("address",address);
-
-
+       // doc.put("da")
 
         firestore.collection("Data").document(id).set(doc)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
