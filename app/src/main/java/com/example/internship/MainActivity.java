@@ -42,15 +42,18 @@ public class MainActivity extends AppCompatActivity {
     String locationString;
     String locationStringUpdate;
 
+
+    LatLng mainLocation;
     // FOR LATITUDE AND LONGITUDE
-    Location location;
+//    Location location;
     // for location
     LocationManager locationManager;
     LocationListener locationListener;
 
-    public int i;
 
     static ArrayList<LatLng> locations= new ArrayList<LatLng>();
+
+    double latitude,longitude;
 
 
 
@@ -91,6 +94,19 @@ public class MainActivity extends AppCompatActivity {
             putLocation=bundle.getString("putLocation");
 
 
+//            seperateLocation(putLocation);
+//            if(putLocation !=null && putLocation.isEmpty()) {
+                String[] latlong = putLocation.split(",");
+                String a1 = latlong[0];
+                String a2 = latlong[1];
+                latitude = Double.parseDouble(a1);
+                longitude = Double.parseDouble(a2);
+//            }else{
+//                latitude=0;
+//                longitude=0;
+//            }
+
+            mainLocation = new LatLng(latitude, longitude);
 
             titleEt.setText(putTitle);
             descEt.setText(putDesc);
@@ -104,6 +120,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
+
         saveBt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -115,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
                     String desc = descEt.getText().toString();
 
                     // function call to update data
-                    updateData(id,title,desc,address,locationStringUpdate);
+                    updateData(id,title,desc,address,locationString);
 
                 }
                 else{
@@ -184,8 +201,28 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        addressTv.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent mapActivity = new Intent(MainActivity.this,MapsActivity.class);
+                mapActivity.putExtra("longitude",longitude);
+                mapActivity.putExtra("latitude",latitude);
+                startActivity(mapActivity);
+                finish();
+            }
+        });
+
 
     }
+
+//    private LatLng seperateLocation(String putLocation) {
+//        String [] latlong =putLocation.split(",");
+//        double latitude =Double.parseDouble(latlong[0]);
+//        double longitude =Double.parseDouble(latlong[1]);
+//        LatLng mainLocation = new LatLng(latitude, longitude);
+//        return mainLocation;
+//    }
 
 
     @Override
@@ -222,8 +259,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent mapActivity = new Intent(MainActivity.this,MapsActivity.class);
                 mapActivity.putExtra("location",location);
-                locationStringUpdate = location.getLongitude()+","+location.getLatitude();
-
 //                locationTv.setVisibility(View.VISIBLE);
 
                 startActivity(mapActivity);

@@ -46,12 +46,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         // From Main Activity
         final Intent intent = getIntent();
-        placePosition=intent.getIntExtra("location",0);
+        Double latitude =intent.getDoubleExtra("latitude",0);
+        Double longitude =intent.getDoubleExtra("longitude",0);
         Location placeLocation =new Location(LocationManager.GPS_PROVIDER);
-        placeLocation.setLatitude(MainActivity.locations.get(placePosition).latitude);
-        placeLocation.setLongitude(MainActivity.locations.get(placePosition).longitude);
+//        placeLocation.setLatitude(MainActivity.locations.get(placePosition).latitude);
+//        placeLocation.setLongitude(MainActivity.locations.get(placePosition).longitude);
 
-        LatLng userLocation = new LatLng(placeLocation.getLongitude(), placeLocation.getLatitude());
+        LatLng userLocation = new LatLng(longitude, latitude);
         mMap.addMarker(new MarkerOptions().position(userLocation).title("Is This Your Location"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(userLocation));
 
