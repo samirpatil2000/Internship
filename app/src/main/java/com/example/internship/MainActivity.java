@@ -29,19 +29,26 @@ public class MainActivity extends AppCompatActivity {
     Button saveBt,showListBt;
     ProgressDialog pd;
 
-    TextView addressTv;
+    TextView addressTv,locationTv;
     ImageButton locationSetBtn;
 
     FirebaseFirestore firestore;
 
-    String putId,putTitle,putDesc,putAddress;
+    String putId,putTitle,putDesc,putAddress,putLocation;
 
     // Address Though location
     String address;
 
+    String locationString;
+    String locationStringUpdate;
+
+    // FOR LATITUDE AND LONGITUDE
+    Location location;
     // for location
     LocationManager locationManager;
     LocationListener locationListener;
+
+    public int i;
 
     static ArrayList<LatLng> locations= new ArrayList<LatLng>();
 
@@ -62,12 +69,12 @@ public class MainActivity extends AppCompatActivity {
         addressTv =findViewById(R.id.addressTv);
         locationSetBtn=findViewById(R.id.locationImgBtn);
 
+        locationTv=findViewById(R.id.locationTv);
 
         pd = new ProgressDialog(this);
         pd.dismiss();
 
         firestore = FirebaseFirestore.getInstance();
-
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("Add Data");
@@ -81,11 +88,14 @@ public class MainActivity extends AppCompatActivity {
             putTitle = bundle.getString("putTitle");
             putDesc = bundle.getString("putDesc");
             putAddress=bundle.getString("putAddress");
+            putLocation=bundle.getString("putLocation");
+
 
 
             titleEt.setText(putTitle);
             descEt.setText(putDesc);
             addressTv.setText(putAddress);
+            locationTv.setText(putLocation);
         }
         else{
 
@@ -105,15 +115,14 @@ public class MainActivity extends AppCompatActivity {
                     String desc = descEt.getText().toString();
 
                     // function call to update data
-                    updateData(id,title,desc,address);
+                    updateData(id,title,desc,address,locationStringUpdate);
 
                 }
                 else{
                     String title = titleEt.getText().toString();
                     String desc = descEt.getText().toString();
 
-
-                    uploadToFirestore(title,desc,address);
+                    uploadToFirestore(title,desc,address,locationString);
 
                 }
 
@@ -131,7 +140,8 @@ public class MainActivity extends AppCompatActivity {
                     public void onLocationChanged(Location location) {
                         pd.dismiss();
                         updateLocationInfo(location);
-
+                        locationTv.setText(location.getLongitude()+","+location.getLatitude());
+                        locationString = location.getLongitude()+","+location.getLatitude();
                     }
 
                     @Override
@@ -151,7 +161,9 @@ public class MainActivity extends AppCompatActivity {
                 };
                 if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
                     ActivityCompat.requestPermissions(MainActivity.this,new String[] {Manifest.permission.ACCESS_FINE_LOCATION},1);
-                }else{
+                }
+                else
+                    {
                     locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0,locationListener);
                     Location lastKnowLocation=locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
                     if(lastKnowLocation!=null){
@@ -196,6 +208,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void updateLocationInfo(final Location location) {
+
         address=" Could not find address :( ";
         Geocoder geocoder=new Geocoder(this, Locale.getDefault());
 
@@ -204,10 +217,15 @@ public class MainActivity extends AppCompatActivity {
 
         // send location to google map
         addressTv.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
                 Intent mapActivity = new Intent(MainActivity.this,MapsActivity.class);
                 mapActivity.putExtra("location",location);
+                locationStringUpdate = location.getLongitude()+","+location.getLatitude();
+
+//                locationTv.setVisibility(View.VISIBLE);
+
                 startActivity(mapActivity);
                 finish();
             }
@@ -256,12 +274,12 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    private void updateData(String id, String title, String desc,String address) {
+    private void updateData(String id, String title, String desc,String address,String locationString) {
         pd.setTitle("Updating...");
         pd.show();
 
         firestore.collection("Data").document(id)
-                .update("title",title,"desc",desc,"address",address)
+                .update("title",title,"desc",desc,"address",address,"location",locationString)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
@@ -278,7 +296,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void uploadToFirestore(String title, String desc,String address) {
+    private void uploadToFirestore(String title, String desc,String address,String locationString) {
         pd.setTitle("Adding Data to Firestore");
         pd.show();
 
@@ -289,7 +307,7 @@ public class MainActivity extends AppCompatActivity {
         doc.put("title",title);
         doc.put("desc",desc);
         doc.put("address",address);
-       // doc.put("da")
+        doc.put("location", locationString);
 
         firestore.collection("Data").document(id).set(doc)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {

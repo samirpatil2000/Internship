@@ -35,8 +35,20 @@ public class Adapter extends RecyclerView.Adapter<ViewHolder> {
             @Override
             public void onItemClick(View view, int position) {
 
+                String id = modelList.get(position).getId();
                 String title = modelList.get(position).getTitle();
                 String desc = modelList.get(position).getDesc();
+                String address=modelList.get(position).getAddress();
+                Integer timestamp = (Integer) modelList.get(position).getTimeStamp();
+
+                Intent detailActivity= new Intent(listActivity,DetailActivity.class);
+                detailActivity.putExtra("dId",id);
+                detailActivity.putExtra("dTitle",title);
+                detailActivity.putExtra("dDesc",desc);
+                detailActivity.putExtra("dAddress",address);
+                detailActivity.putExtra("dTimestamp",timestamp);
+
+                listActivity.startActivity(detailActivity);
 
                 Toast.makeText(listActivity,title,Toast.LENGTH_LONG).show();
             }
@@ -56,6 +68,7 @@ public class Adapter extends RecyclerView.Adapter<ViewHolder> {
                             String title = modelList.get(position).getTitle();
                             String desc = modelList.get(position).getDesc();
                             String address=modelList.get(position).getAddress();
+                            String location=modelList.get(position).getLocation();
                             Integer timestamp = (Integer) modelList.get(position).getTimeStamp();
 
                             Intent intent= new Intent(listActivity,MainActivity.class);
@@ -64,6 +77,7 @@ public class Adapter extends RecyclerView.Adapter<ViewHolder> {
                             intent.putExtra("putDesc",desc);
                             intent.putExtra("putAddress",address);
                             intent.putExtra("putTimestamp",timestamp);
+                            intent.putExtra("putLocation",location);
 
                             listActivity.startActivity(intent);
                         }

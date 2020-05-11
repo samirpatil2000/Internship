@@ -84,7 +84,9 @@ public class ListActivity extends AppCompatActivity {
                                 Model model = new Model(doc.getString("id")
                                         , doc.getString("title")
                                         , doc.getString("desc")
-                                ,doc.getString("address"));
+                                        ,doc.getString("address")
+                                        ,doc.getString("location")
+                                );
                                 modelList.add(model);
                             }
                         }

@@ -1,5 +1,6 @@
 package com.example.internship;
 
+import android.location.Location;
 import com.google.firestore.v1beta1.DocumentTransform;
 
 import static java.sql.Types.TIMESTAMP;
@@ -7,16 +8,18 @@ import static java.sql.Types.TIMESTAMP;
 public class Model {
     String id, title,desc,address;
     Object timeStamp;
+    String location;
 
     public Model() {
     }
 
-    public Model(String id, String title, String desc,String address) {
+    public Model(String id, String title, String desc,String address,String location) {
         this.id = id;
         this.title = title;
         this.desc = desc;
         this.address=address;
         this.timeStamp = TIMESTAMP;
+        this.location=location;
     }
 
     public String getId() {
@@ -57,5 +60,13 @@ public class Model {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 }

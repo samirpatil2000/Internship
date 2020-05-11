@@ -25,7 +25,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         setContentView(R.layout.activity_maps);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
+                .findFragmentById(R.id.dmap);
         mapFragment.getMapAsync(this);
 
     }
@@ -54,6 +54,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         LatLng userLocation = new LatLng(placeLocation.getLongitude(), placeLocation.getLatitude());
         mMap.addMarker(new MarkerOptions().position(userLocation).title("Is This Your Location"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(userLocation));
+
 
 
 
